@@ -19,7 +19,7 @@ def expected_dict_and_log():
         'status_code': 200,
         'response_size': 612,
         'referrer': '-',
-        'user_agent': 'Mozilla/5.0'
+        'agent': 'Mozilla/5.0'
     }
     log: NginxLog = parser.parse_log_line(log_line)
     return expected, log
@@ -81,6 +81,6 @@ def test_nginx_parser_referrer(expected_dict_and_log):
     assert expected['referrer'] == log.referrer
 
 
-def test_nginx_parser_user_agent(expected_dict_and_log):
+def test_nginx_parser_agent(expected_dict_and_log):
     expected, log = expected_dict_and_log
-    assert expected['user_agent'] == log.user_agent
+    assert expected['agent'] == log.agent
