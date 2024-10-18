@@ -10,13 +10,15 @@ class DateHandler:
         self.to_date = mapped_params.get("to", None)
         self.nginx_date = nginx_date
 
-    def _convert_iso_to_datetime(self):
+    def _convert_iso_to_datetime(self) -> None:
+        """Переводим из ISO формата в datetime."""
         if self.from_date:
             self.from_date = datetime.fromisoformat(self.from_date)
         if self.to_date:
             self.to_date = datetime.fromisoformat(self.to_date)
 
     def is_within_timeframe(self) -> bool:
+        """Проверяем попадает ли лог в указанный временной промежуток."""
         self._convert_iso_to_datetime()
 
         if self.from_date is None:
