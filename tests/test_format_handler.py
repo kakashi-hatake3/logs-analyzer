@@ -7,9 +7,9 @@ from src.wrong_input_error import WrongParameterNameError
 @pytest.mark.parametrize(
     "params, expected",
     [
-    ({'path': 'scnd', 'format': 'adoc'}, 'adoc'),
-    ({'path': 'scnd', 'format': 'aboba'}, WrongParameterNameError('aboba')),
-    ({'path': 'scnd', 'from': 'ss'}, None),
+        ({'path': 'scnd', 'format': 'adoc'}, 'adoc'),
+        ({'path': 'scnd', 'format': 'aboba'}, WrongParameterNameError('aboba')),
+        ({'path': 'scnd', 'from': 'ss'}, None),
     ]
                          )
 def test_format_handler(params, expected):
