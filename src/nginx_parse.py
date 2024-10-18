@@ -1,10 +1,11 @@
 import re
 from datetime import datetime
+from typing import Dict
 
 
 class NginxLog:
     def __init__(self, ip, client_id, user_id, time_local, method, path, protocol, status_code, response_size, referrer,
-                 user_agent):
+                 agent, mapped_log: Dict[str, str | int]):
         self.ip = ip
         self.client_id = client_id
         self.user_id = user_id
@@ -15,7 +16,8 @@ class NginxLog:
         self.status_code = status_code
         self.response_size = response_size
         self.referrer = referrer
-        self.user_agent = user_agent
+        self.agent = agent
+        self.mapped_log = mapped_log
 
 
 class NginxLogParser:
@@ -31,7 +33,7 @@ class NginxLogParser:
         r'(?P<status_code>\d{3}) ' 
         r'(?P<response_size>\S+) '  
         r'"(?P<referrer>[^"]*)" ' 
-        r'"(?P<user_agent>[^"]*)"'
+        r'"(?P<agent>[^"]*)"'
     )
 
     def parse_log_line(self, log_line):
@@ -42,7 +44,7 @@ class NginxLogParser:
             time_local = self.parse_time(data['time_local'])
 
             # Если размер ответа '-', то это означает, что размер неизвестен, заменим на None
-            response_size = int(data['response_size']) if data['response_size'] != '-' else None
+            data['response_size'] = int(data['response_size']) if data['response_size'] != '-' else None
 
             data['status_code'] = int(data['status_code'])
 
@@ -56,9 +58,10 @@ class NginxLogParser:
                 path=data['path'],
                 protocol=data['protocol'],
                 status_code=data['status_code'],
-                response_size=response_size,
+                response_size=data['response_size'],
                 referrer=data['referrer'],
-                user_agent=data['user_agent']
+                agent=data['agent'],
+                mapped_log=data
             )
         else:
             raise ValueError(f"Лог не соответствует формату: {log_line}")
