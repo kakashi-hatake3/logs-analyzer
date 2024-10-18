@@ -41,7 +41,7 @@ class InputMapper:
         if self._command_count * 2 + 1 != len(self.parameters):
             raise WrongInputError
         for key in self._mapped_params.keys():
-            if key not in ["path", "from", "to", "format"]:
+            if key not in ["path", "from", "to", "format", "filter-field", "filter-value"]:
                 raise WrongParameterNameError(key)
 
     def get_mapped_params(self) -> Dict[str, str] | Exception:
