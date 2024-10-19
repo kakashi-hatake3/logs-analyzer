@@ -8,7 +8,7 @@ class DateHandler:
     def __init__(self, mapped_params: Dict[str, str], nginx_date: datetime):
         self.from_date = mapped_params.get("from", None)
         self.to_date = mapped_params.get("to", None)
-        self.nginx_date = nginx_date
+        self.nginx_date = nginx_date.replace(tzinfo=None)
 
     def _convert_iso_to_datetime(self) -> None:
         """Переводим из ISO формата в datetime."""

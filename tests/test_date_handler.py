@@ -1,5 +1,5 @@
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone
 
 from src.date_handler import DateHandler
 
@@ -18,5 +18,5 @@ from src.date_handler import DateHandler
     ]
                          )
 def test_date_handler(params, expected):
-    date_handler = DateHandler(params, datetime(2012, 4, 1))
+    date_handler = DateHandler(params, datetime(2012, 4, 1, tzinfo=timezone.utc))
     assert date_handler.is_within_timeframe() == expected
