@@ -37,3 +37,42 @@ class WrongCountParametersError(Exception):
         if isinstance(other, WrongCountParametersError):
             return self.__str__() == other.__str__()
         return False
+
+
+class WrongFileError(Exception):
+    def __init__(self):
+        super().__init__()
+
+    def __str__(self):
+        return 'Не получается открыть файл!'
+
+    def __eq__(self, other):
+        if isinstance(other, WrongFileError):
+            return self.__str__() == other.__str__()
+        return False
+
+
+class WrongHtmlError(Exception):
+    def __init__(self):
+        super().__init__()
+
+    def __str__(self):
+        return 'На странице нет блока <pre>!'
+
+    def __eq__(self, other):
+        if isinstance(other, WrongFileError):
+            return self.__str__() == other.__str__()
+        return False
+
+
+class WrongPathError(Exception):
+    def __init__(self):
+        super().__init__()
+
+    def __str__(self):
+        return 'Такого пути нет!'
+
+    def __eq__(self, other):
+        if isinstance(other, WrongPathError):
+            return self.__str__() == other.__str__()
+        return False
