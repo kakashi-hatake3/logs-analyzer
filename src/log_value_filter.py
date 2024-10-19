@@ -25,11 +25,15 @@ class LogValueFilter:
         return False
 
     def is_fits_the_filter(self) -> bool:
-        """Проверяем удовлетворяет ли лог заданному фильтру."""
+        """Проверяем на ошибки."""
         if self._is_available():
             if self._is_filter_params_correctness():
-                if self.filter_value in self.log.mapped_log[self.filter_field]:
-                    return True
-                return False
+                return self.filter()
             else:
                 raise WrongParameterNameError(self.filter_field)
+
+    def filter(self) -> bool:
+        """Проверяем удовлетворяет ли лог заданному фильтру."""
+        if self.filter_value in self.log.mapped_log[self.filter_field]:
+            return True
+        return False
