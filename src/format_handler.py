@@ -22,7 +22,7 @@ class FormatHandler:
         if self.file_format not in self.formats:
             raise WrongParameterNameError(self.file_format)
 
-    def get_format(self) -> str | Exception:
+    def get_format(self) -> str | Exception | None:
         """Возвращаем проверенный формат."""
         if self.is_available():
             try:
