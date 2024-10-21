@@ -44,7 +44,7 @@ class NginxLogParser:
             time_local = self.parse_time(data['time_local'])
 
             # Если размер ответа '-', то это означает, что размер неизвестен, заменим на None
-            data['response_size'] = int(data['response_size']) if data['response_size'] != '-' else None
+            data['response_size'] = int(data['response_size']) if data['response_size'] != '-' else 0
 
             data['status_code'] = int(data['status_code'])
 
