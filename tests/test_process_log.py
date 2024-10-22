@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 import pytest
-from pytest_mock import mocker
 
 from src.nginx_parse import NginxLogParser
 from src.process_log import ProcessLog
