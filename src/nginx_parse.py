@@ -2,6 +2,8 @@ import re
 from datetime import datetime
 from typing import Dict
 
+from src.enums import LogFields
+
 
 class NginxLog:
     def __init__(self, ip, client_id, user_id, time_local, method, path, protocol, status_code, response_size, referrer,
@@ -41,26 +43,26 @@ class NginxLogParser:
         if match:
             data = match.groupdict()
 
-            time_local = self.parse_time(data['time_local'])
+            time_local = self.parse_time(data[LogFields.time_local])
 
-            # Если размер ответа '-', то это означает, что размер неизвестен, заменим на None
-            data['response_size'] = int(data['response_size']) if data['response_size'] != '-' else 0
+            # Если размер ответа '-', то это означает, что размер неизвестен, заменим на 0
+            data[LogFields.response_size] = int(data[LogFields.response_size]) \
+                if data[LogFields.response_size] != '-' else 0
 
-            data['status_code'] = int(data['status_code'])
+            data[LogFields.status_code] = int(data[LogFields.status_code])
 
-            # Создаем объект NginxLogEntry
             return NginxLog(
-                ip=data['ip'],
-                client_id=data['client_id'],
-                user_id=data['user_id'],
+                ip=data[LogFields.ip],
+                client_id=data[LogFields.client_id],
+                user_id=data[LogFields.user_id],
                 time_local=time_local,
-                method=data['method'],
-                path=data['path'],
-                protocol=data['protocol'],
-                status_code=data['status_code'],
-                response_size=data['response_size'],
-                referrer=data['referrer'],
-                agent=data['agent'],
+                method=data[LogFields.method],
+                path=data[LogFields.path],
+                protocol=data[LogFields.protocol],
+                status_code=data[LogFields.status_code],
+                response_size=data[LogFields.response_size],
+                referrer=data[LogFields.referrer],
+                agent=data[LogFields.agent],
                 mapped_log=data
             )
         else:
