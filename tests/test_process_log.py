@@ -1,4 +1,4 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 import pytest
 from pytest_mock import mocker
@@ -84,10 +84,11 @@ def test_is_date_filter_within_timeframe(log_line, mapped_params):
     """Тест, что лог проходит фильтр по времени."""
     processor = ProcessLog(log_line, mapped_params)
     processor._create_log()
-    assert processor._is_date_filter() == True
+    assert processor._is_date_filter() is True
+
 
 def test_is_date_filter_without_timeframe(log_line, wrong_mapped_params):
     """Тест, что лог не проходит фильтр по времени."""
     processor = ProcessLog(log_line, wrong_mapped_params)
     processor._create_log()
-    assert processor._is_date_filter() == False
+    assert processor._is_date_filter() is False

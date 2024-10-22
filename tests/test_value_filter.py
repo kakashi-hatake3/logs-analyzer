@@ -1,7 +1,7 @@
 import pytest
 
 from src.log_value_filter import LogValueFilter
-from src.nginx_parse import NginxLog, NginxLogParser
+from src.nginx_parse import NginxLogParser
 from src.wrong_input_error import WrongParameterNameError
 
 

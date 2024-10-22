@@ -4,6 +4,7 @@ import pytest
 
 from src.nginx_parse import NginxLogParser, NginxLog
 
+
 @pytest.fixture(scope="module")
 def expected_dict_and_log():
     parser = NginxLogParser()

@@ -57,7 +57,7 @@ class CheckFilterValuesCorrectness:
 
     def is_available(self) -> bool:
         """Проверяем есть ли оба параметра фильтра."""
-        if type(self.filter_field) == type(self.filter_value):
+        if isinstance(self.filter_field, type(self.filter_value)):
             if self.filter_value is None and self.filter_field is None:
                 self.both_is_none = True
             return True
