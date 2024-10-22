@@ -37,7 +37,7 @@ def test_most_callable_resources_statistic():
     stat.update(log2)
     stat.update(log3)
 
-    assert stat.get() == {"/home": 2, "/about": 1}
+    assert stat.get() == {'Ресурсы': {"/home": 2, "/about": 1}}
 
 
 # Тест для MostFrequentStatusCodesStatistic
@@ -51,7 +51,7 @@ def test_most_frequent_status_codes_statistic():
     stat.update(log2)
     stat.update(log3)
 
-    assert stat.get() == {200: 2, 404: 1}
+    assert stat.get() == {'Коды статуса': {200: 2, 404: 1}}
 
 
 # Тест для AverageResponseSizeStatistic
@@ -110,4 +110,4 @@ def test_percentile_response_size_statistic():
 
     stat.calculate_percentile()
 
-    assert stat.get() == {'95 перцентиль размера ответа': np.percentile([500, 1000, 1500, 2000], 95)}
+    assert stat.get() == {'95 перцентиль размера ответа': int(np.percentile([500, 1000, 1500, 2000], 95))}
