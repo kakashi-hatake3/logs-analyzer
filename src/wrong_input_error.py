@@ -57,10 +57,10 @@ class WrongHtmlError(Exception):
         super().__init__()
 
     def __str__(self):
-        return 'На странице нет блока <pre>!'
+        return 'На странице нет логов!'
 
     def __eq__(self, other):
-        if isinstance(other, WrongFileError):
+        if isinstance(other, WrongHtmlError):
             return self.__str__() == other.__str__()
         return False
 
