@@ -37,11 +37,6 @@ def nginx_log(log_line):
     return NginxLogParser().parse_log_line(log_line)
 
 
-@pytest.fixture
-def mock_log_value_filter():
-    return mocker.patch('src.log_value_filter.LogValueFilter')
-
-
 def test_create_log_success(log_line, mapped_params, nginx_log):
     """Тест успешного создания лога."""
     process_log = ProcessLog(log_line, mapped_params)
