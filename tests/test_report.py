@@ -1,122 +1,63 @@
-from src.logs_statistic import RequestCountStatistic, MostFrequentStatusCodesStatistic
-from src.report import Report
+import pytest
+
+from src.report import AdocReport, MarkdownReport, Report
 
 
-class LogTest:
-    def __init__(self, path, status_code, response_size, agent, ip):
-        self.path = path
-        self.status_code = status_code
-        self.response_size = response_size
-        self.agent = agent
-        self.ip = ip
-
-
-# Тест для класса Report
-def test_report_add_statistic():
+# Тест для базового класса Report
+def test_report_initialization():
     report = Report()
-    stat = RequestCountStatistic()
-    log = LogTest("/home", 200, 500, "agent1", "127.0.0.1")
+    assert report.statistics == []  # Проверка, что список статистики пустой
+    assert report.board == ''  # Проверка, что изначально нет текста отчета
+    assert report.report_format == "markdown"  # По умолчанию формат markdown
 
-    stat.update(log)
-    report.add_statistic(stat)
-
-    # Убедимся, что статистика добавлена в отчет
-    assert len(report.statistics) == 1
-    assert report.statistics[0] == stat
-
-
-def test_report_generate_markdown():
+def test_add_statistic():
     report = Report()
-    stat = RequestCountStatistic()
-    log1 = LogTest("/home", 200, 500, "agent1", "127.0.0.1")
-    log2 = LogTest("/about", 404, 300, "agent2", "127.0.0.2")
+    report.add_statistic("Test statistic")
+    assert report.statistics == ["Test statistic"]  # Статистика была добавлена
 
-    stat.update(log1)
-    stat.update(log2)
-    report.add_statistic(stat)
+def test_report_str_empty():
+    report = Report()
+    assert str(report) == ''  # Проверка пустого отчета (метод __str__)
 
-    markdown_output = report.generate_report('markdown')
+# Тесты для MarkdownReport
+def test_markdown_report_initialization():
+    report = MarkdownReport()
+    assert report.report_format == "markdown"  # Формат должен быть markdown
+    assert report.statistics == []  # Пустая статистика
+    assert report.board == ''  # Пустое поле для отчета
 
-    # Ожидаемый вывод в формате markdown
+def test_markdown_generate_report():
+    report = MarkdownReport()
+    report.add_statistic("First stat")
+    report.add_statistic("Second stat")
+    report.generate_report()
     expected_output = (
-        "### Кол-во запросов\n"
-        "- **Value:** 2\n\n"
+        '##############   markdown   ##############\n'
+        '### First stat\n'
+        '### Second stat\n'
     )
+    assert report.board == expected_output  # Проверка правильности генерации отчета
+    assert str(report) == expected_output  # Проверка работы __str__
 
-    assert markdown_output == expected_output
 
+# Тесты для AdocReport
+def test_adoc_report_initialization():
+    report = AdocReport()
+    assert report.report_format == "adoc"  # Формат должен быть adoc
+    assert report.statistics == []  # Пустая статистика
+    assert report.board == ''  # Пустое поле для отчета
 
-def test_report_generate_adoc():
-    report = Report()
-    stat = RequestCountStatistic()
-    log1 = LogTest("/home", 200, 500, "agent1", "127.0.0.1")
-    log2 = LogTest("/about", 404, 300, "agent2", "127.0.0.2")
-
-    stat.update(log1)
-    stat.update(log2)
-    report.add_statistic(stat)
-
-    adoc_output = report.generate_report('adoc')
-
-    # Ожидаемый вывод в формате adoc
+def test_adoc_generate_report():
+    report = AdocReport()
+    report.add_statistic("First stat")
+    report.add_statistic("Second stat")
+    report.generate_report()
     expected_output = (
-        "== Кол-во запросов\n"
-        "* Value: 2\n\n"
+        '**************   adoc   **************\n'
+        '*** First stat\n'
+        '*** Second stat\n'
     )
+    assert report.board == expected_output  # Проверка правильности генерации отчета
+    assert str(report) == expected_output  # Проверка работы __str__
 
-    assert adoc_output == expected_output
-
-
-def test_report_none_format():
-    report = Report()
-    stat = RequestCountStatistic()
-    log1 = LogTest("/home", 200, 500, "agent1", "127.0.0.1")
-    log2 = LogTest("/about", 404, 300, "agent2", "127.0.0.2")
-
-    stat.update(log1)
-    stat.update(log2)
-    report.add_statistic(stat)
-
-    markdown_output = report.generate_report(None)
-
-    # Ожидаемый вывод в формате markdown
-    expected_output = (
-        "### Кол-во запросов\n"
-        "- **Value:** 2\n\n"
-    )
-
-    assert markdown_output == expected_output
-
-
-# Тест для нескольких статистик
-def test_report_multiple_statistics():
-    report = Report()
-
-    # Статистика количества запросов
-    request_count_stat = RequestCountStatistic()
-    log1 = LogTest("/home", 200, 500, "agent1", "127.0.0.1")
-    log2 = LogTest("/about", 404, 300, "agent2", "127.0.0.2")
-    request_count_stat.update(log1)
-    request_count_stat.update(log2)
-
-    # Статистика кодов состояния
-    status_code_stat = MostFrequentStatusCodesStatistic()
-    status_code_stat.update(log1)
-    status_code_stat.update(log2)
-
-    # Добавляем обе статистики в отчет
-    report.add_statistic(request_count_stat)
-    report.add_statistic(status_code_stat)
-
-    # Ожидаемый отчет в формате markdown
-    markdown_output = report.generate_report('markdown')
-    expected_output = (
-        "### Кол-во запросов\n"
-        "- **Value:** 2\n\n"
-        "### 200\n"
-        "- **Value:** 1\n\n"
-        "### 404\n"
-        "- **Value:** 1\n\n"
-    )
-
-    assert markdown_output == expected_output
+# Запуск тестов с помощью pytest.
