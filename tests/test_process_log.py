@@ -16,7 +16,7 @@ def mapped_params():
 @pytest.fixture
 def none_mapped_params():
     """Фикстура для параметров, маппинга."""
-    return {'from': '2000-10-10', 'format': 'adoc'}
+    return {'from': '2000-10-10', 'format': 'adoc', 'filter-field': 'method'}
 
 
 @pytest.fixture
