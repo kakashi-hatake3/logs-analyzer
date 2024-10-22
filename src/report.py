@@ -1,30 +1,41 @@
 class Report:
     """Создание отчета."""
 
-    def __init__(self):
+    def __init__(self, report_format="markdown"):
         self.statistics = []
+        self.board = ''
+        self.report_format = report_format
 
     def add_statistic(self, stat):
         """Добавляет статистику в список для отчета"""
         self.statistics.append(stat)
 
-    def generate_report(self, report_format='markdown'):
+    def generate_report(self):
         """Генерирует отчет в формате markdown или adoc"""
+        pass
 
-        if report_format is None:
-            report_format = 'markdown'
+    def __str__(self):
+        return self.board
 
-        report_lines = []
 
-        # Генерация отчета для каждого элемента статистики
-        for stat in self.statistics:
-            stat_data = stat.get()
-            for title, value in stat_data.items():
-                if report_format == 'markdown':
-                    report_lines.append(f"### {title}\n")
-                    report_lines.append(f"- **Value:** {value}\n\n")
-                elif report_format == 'adoc':
-                    report_lines.append(f"== {title}\n")
-                    report_lines.append(f"* Value: {value}\n\n")
+class MarkdownReport(Report):
 
-        return ''.join(report_lines)
+    def __init__(self):
+        super().__init__()
+
+    def generate_report(self):
+        self.board += f'##############   {self.report_format}   ##############\n'
+        for line in self.statistics:
+            self.board += f'### {line}\n'
+
+
+class AdocReport(Report):
+
+    def __init__(self):
+        super().__init__()
+        self.report_format = "adoc"
+
+    def generate_report(self):
+        self.board += f'**************   {self.report_format}   **************\n'
+        for line in self.statistics:
+            self.board += f'*** {line}\n'
