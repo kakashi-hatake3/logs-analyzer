@@ -18,13 +18,13 @@ def get_log():
         ({'from': '2000-10-10', 'format': 'adoc', 'filter-field': 'method', 'filter-value': 'GET'}, True),
         ({'from': '2000-10-10', 'format': 'adoc', 'filter-field': 'method', 'filter-value': 'POST'}, False),
         ({'from': '2000-10-10', 'format': 'adoc', 'filter-value': 'GET'}, None),
-        ({'from': '2000-10-10', 'format': 'adoc'}, None),
+        ({'from': '2000-10-10', 'format': 'adoc'}, True),
     ]
                          )
 def test_value_filter(get_log, params, expected):
     log = get_log
     log_filter = LogValueFilter(params, log)
-    assert log_filter.is_fits_the_filter() == expected
+    assert log_filter.is_fits_filter_first_check() == expected
 
 
 def test_value_filter_error(get_log):
@@ -32,4 +32,4 @@ def test_value_filter_error(get_log):
     params = {'from': '2000-10-10', 'format': 'adoc', 'filter-field': 'aboba', 'filter-value': 'POST'}
     log_filter = LogValueFilter(params, log)
     with pytest.raises(WrongParameterNameError):
-        log_filter.is_fits_the_filter()
+        log_filter.is_fits_filter_first_check()
