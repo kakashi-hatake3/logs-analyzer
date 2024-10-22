@@ -15,7 +15,7 @@ class UpdateStatistic(ABC):
 class GetStatistic(ABC):
 
     @abstractmethod
-    def get(self) -> Dict:
+    def get(self) -> Dict[str, str | int]:
         pass
 
 
@@ -42,7 +42,7 @@ class MostCallableResourcesStatistic(UpdateStatistic, GetStatistic):
         self.resources[log.path] += 1
 
     def get(self):
-        return self.resources
+        return {'Ресурсы': self.resources}
 
 
 class MostFrequentStatusCodesStatistic(UpdateStatistic, GetStatistic):
@@ -56,7 +56,7 @@ class MostFrequentStatusCodesStatistic(UpdateStatistic, GetStatistic):
         self.status_codes[log.status_code] += 1
 
     def get(self):
-        return self.status_codes
+        return {'Коды статуса': self.status_codes}
 
 
 class AverageResponseSizeStatistic(UpdateStatistic, GetStatistic):
@@ -66,12 +66,17 @@ class AverageResponseSizeStatistic(UpdateStatistic, GetStatistic):
         self.average_size = 0
 
     def calculate_average(self):
-        self.average_size = sum(self.sizes) / len(self.sizes)
+        try:
+            self.average_size = int(sum(self.sizes) / len(self.sizes))
+        except ZeroDivisionError:
+            print('Ноль логов!')
+            exit()
 
     def update(self, log):
         self.sizes.append(log.response_size)
 
     def get(self):
+        self.calculate_average()
         return {'Средний размер ответа': self.average_size}
 
 
@@ -128,7 +133,7 @@ class PercentileResponseSizeStatistic(UpdateStatistic, GetStatistic):
         self.percentile = 0
 
     def calculate_percentile(self):
-        self.percentile = np.percentile(self.sizes, 95)
+        self.percentile = int(np.percentile(self.sizes, 95))
 
     def update(self, log):
         self.sizes.append(log.response_size)
