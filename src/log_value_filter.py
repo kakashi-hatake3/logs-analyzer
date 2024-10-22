@@ -16,7 +16,9 @@ class LogValueFilter:
 
     def is_fits_filter_first_check(self) -> bool:
         """Проверяем на ошибки."""
-        check_filter = CheckFilterValuesCorrectness(self.filter_field, self.filter_value, self.both_is_none)
+        check_filter = CheckFilterValuesCorrectness(
+            self.filter_field, self.filter_value, self.both_is_none
+        )
         if check_filter.is_available():
             self.both_is_none = check_filter.both_is_none
             if self.both_is_none:

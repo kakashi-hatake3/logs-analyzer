@@ -4,9 +4,15 @@ import platform
 from src.format_handler import FormatHandler
 from src.logs_handler import LogsHandler, PathHandler
 from src.input_handler import InputMapper
-from src.logs_statistic import RequestCountStatistic, MostCallableResourcesStatistic, MostFrequentAgentStatistic, \
-    AverageResponseSizeStatistic, MostFrequentStatusCodesStatistic, MostFrequentIpAddressStatistic, \
-    PercentileResponseSizeStatistic
+from src.logs_statistic import (
+    RequestCountStatistic,
+    MostCallableResourcesStatistic,
+    MostFrequentAgentStatistic,
+    AverageResponseSizeStatistic,
+    MostFrequentStatusCodesStatistic,
+    MostFrequentIpAddressStatistic,
+    PercentileResponseSizeStatistic,
+)
 from src.report import MarkdownReport, AdocReport
 from src.wrong_input_error import WrongParameterNameError
 
@@ -42,7 +48,7 @@ def run(mapped_params):
         PercentileResponseSizeStatistic(),
     ]
 
-    if report_format == 'adoc':
+    if report_format == "adoc":
         report = AdocReport()
     else:
         report = MarkdownReport()

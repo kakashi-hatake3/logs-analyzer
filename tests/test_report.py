@@ -4,7 +4,7 @@ from src.report import AdocReport, MarkdownReport, Report
 def test_report_initialization():
     report = Report()
     assert report.statistics == []
-    assert report.board == ''
+    assert report.board == ""
     assert report.report_format == "markdown"
 
 
@@ -16,14 +16,14 @@ def test_add_statistic():
 
 def test_report_str_empty():
     report = Report()
-    assert str(report) == ''
+    assert str(report) == ""
 
 
 def test_markdown_report_initialization():
     report = MarkdownReport()
     assert report.report_format == "markdown"
     assert report.statistics == []
-    assert report.board == ''
+    assert report.board == ""
 
 
 def test_markdown_generate_report():
@@ -32,9 +32,9 @@ def test_markdown_generate_report():
     report.add_statistic("Second stat")
     report.generate_report()
     expected_output = (
-        '##############   markdown   ##############\n'
-        '### First stat\n'
-        '### Second stat\n'
+        "##############   markdown   ##############\n"
+        "### First stat\n"
+        "### Second stat\n"
     )
     assert report.board == expected_output
     assert str(report) == expected_output
@@ -44,7 +44,7 @@ def test_adoc_report_initialization():
     report = AdocReport()
     assert report.report_format == "adoc"
     assert report.statistics == []
-    assert report.board == ''
+    assert report.board == ""
 
 
 def test_adoc_generate_report():
@@ -53,9 +53,9 @@ def test_adoc_generate_report():
     report.add_statistic("Second stat")
     report.generate_report()
     expected_output = (
-        '**************   adoc   **************\n'
-        '*** First stat\n'
-        '*** Second stat\n'
+        "**************   adoc   **************\n"
+        "*** First stat\n"
+        "*** Second stat\n"
     )
     assert report.board == expected_output
     assert str(report) == expected_output

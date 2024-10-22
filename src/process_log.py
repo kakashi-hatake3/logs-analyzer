@@ -40,19 +40,24 @@ class DateFilter:
 
     def is_date_filter(self) -> bool:
         """Проверяем проходит ли лог по времени."""
-        date_handler = DateHandler(self.processor.mapped_params, self.processor.log.time_local)
+        date_handler = DateHandler(
+            self.processor.mapped_params, self.processor.log.time_local
+        )
         return date_handler.is_within_timeframe()
 
 
 class CreateLog:
     """Создаем лог."""
+
     def __init__(self, processor: ProcessLog):
         self.processor = processor
 
     def create_log(self) -> None:
         """Создаем лог."""
         try:
-            self.processor.log = NginxLogParser().parse_log_line(self.processor.log_line)
+            self.processor.log = NginxLogParser().parse_log_line(
+                self.processor.log_line
+            )
         except ValueError as e:
             print(e)
             exit()

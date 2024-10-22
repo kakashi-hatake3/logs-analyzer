@@ -3,7 +3,7 @@ class Report:
 
     def __init__(self, report_format="markdown"):
         self.statistics = []
-        self.board = ''
+        self.board = ""
         self.report_format = report_format
 
     def add_statistic(self, stat):
@@ -24,9 +24,9 @@ class MarkdownReport(Report):
         super().__init__()
 
     def generate_report(self):
-        self.board += f'##############   {self.report_format}   ##############\n'
+        self.board += f"##############   {self.report_format}   ##############\n"
         for line in self.statistics:
-            self.board += f'### {line}\n'
+            self.board += f"### {line}\n"
 
 
 class AdocReport(Report):
@@ -36,6 +36,6 @@ class AdocReport(Report):
         self.report_format = "adoc"
 
     def generate_report(self):
-        self.board += f'**************   {self.report_format}   **************\n'
+        self.board += f"**************   {self.report_format}   **************\n"
         for line in self.statistics:
-            self.board += f'*** {line}\n'
+            self.board += f"*** {line}\n"

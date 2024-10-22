@@ -2,7 +2,11 @@ from sys import argv
 from typing import List, Dict
 
 from src.enums import InputParameters
-from src.wrong_input_error import WrongInputError, WrongParameterNameError, WrongCountParametersError
+from src.wrong_input_error import (
+    WrongInputError,
+    WrongParameterNameError,
+    WrongCountParametersError,
+)
 
 
 class InputHandler:
@@ -39,7 +43,9 @@ class InputMapper:
         """Возвращаем словарь или ошибку."""
         try:
             self._map_input()
-            CheckParameters(self.parameters, self.command_count, self._mapped_params).check_correctness()
+            CheckParameters(
+                self.parameters, self.command_count, self._mapped_params
+            ).check_correctness()
         except WrongCountParametersError as e:
             print(e)
             exit()

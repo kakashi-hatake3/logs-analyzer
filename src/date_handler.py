@@ -13,7 +13,9 @@ class DateHandler:
         self.log_date = log_date.replace(tzinfo=None)
 
     def convert_iso_to_datetime(self) -> None:
-        self.from_date, self.to_date = ConvertISOIntoDatetime(self.from_date, self.to_date).get_dates()
+        self.from_date, self.to_date = ConvertISOIntoDatetime(
+            self.from_date, self.to_date
+        ).get_dates()
 
     def is_within_timeframe(self) -> bool:
         """Конвертируем и возвращаем результат фильтрации."""

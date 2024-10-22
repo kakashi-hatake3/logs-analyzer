@@ -15,12 +15,28 @@ def get_log():
 @pytest.mark.parametrize(
     "params, expected",
     [
-        ({'from': '2000-10-10', 'format': 'adoc', 'filter-field': 'method', 'filter-value': 'GET'}, True),
-        ({'from': '2000-10-10', 'format': 'adoc', 'filter-field': 'method', 'filter-value': 'POST'}, False),
-        ({'from': '2000-10-10', 'format': 'adoc', 'filter-value': 'GET'}, None),
-        ({'from': '2000-10-10', 'format': 'adoc'}, True),
-    ]
-                         )
+        (
+            {
+                "from": "2000-10-10",
+                "format": "adoc",
+                "filter-field": "method",
+                "filter-value": "GET",
+            },
+            True,
+        ),
+        (
+            {
+                "from": "2000-10-10",
+                "format": "adoc",
+                "filter-field": "method",
+                "filter-value": "POST",
+            },
+            False,
+        ),
+        ({"from": "2000-10-10", "format": "adoc", "filter-value": "GET"}, None),
+        ({"from": "2000-10-10", "format": "adoc"}, True),
+    ],
+)
 def test_value_filter(get_log, params, expected):
     log = get_log
     log_filter = LogValueFilter(params, log)
@@ -29,7 +45,12 @@ def test_value_filter(get_log, params, expected):
 
 def test_value_filter_error(get_log):
     log = get_log
-    params = {'from': '2000-10-10', 'format': 'adoc', 'filter-field': 'aboba', 'filter-value': 'POST'}
+    params = {
+        "from": "2000-10-10",
+        "format": "adoc",
+        "filter-field": "aboba",
+        "filter-value": "POST",
+    }
     log_filter = LogValueFilter(params, log)
     with pytest.raises(WrongParameterNameError):
         log_filter.is_fits_filter_first_check()

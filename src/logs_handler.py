@@ -30,7 +30,7 @@ class LogsHandler:
     def _get_local_logs(self) -> NginxLog | None:
         """Получаем логи локально."""
         try:
-            with open(self.path, 'r') as f:
+            with open(self.path, "r") as f:
                 return self._generate_log(f.readlines())
         except OSError:
             print(WrongFileError())

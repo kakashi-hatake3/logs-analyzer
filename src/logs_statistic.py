@@ -28,7 +28,7 @@ class RequestCountStatistic(UpdateStatistic, GetStatistic):
         self.count += 1
 
     def get(self):
-        return {'Кол-во запросов': self.count}
+        return {"Кол-во запросов": self.count}
 
 
 class MostCallableResourcesStatistic(UpdateStatistic, GetStatistic):
@@ -42,7 +42,7 @@ class MostCallableResourcesStatistic(UpdateStatistic, GetStatistic):
         self.resources[log.path] += 1
 
     def get(self):
-        return {'Ресурсы': self.resources}
+        return {"Ресурсы": self.resources}
 
 
 class MostFrequentStatusCodesStatistic(UpdateStatistic, GetStatistic):
@@ -56,7 +56,7 @@ class MostFrequentStatusCodesStatistic(UpdateStatistic, GetStatistic):
         self.status_codes[log.status_code] += 1
 
     def get(self):
-        return {'Коды статуса': self.status_codes}
+        return {"Коды статуса": self.status_codes}
 
 
 class AverageResponseSizeStatistic(UpdateStatistic, GetStatistic):
@@ -69,7 +69,7 @@ class AverageResponseSizeStatistic(UpdateStatistic, GetStatistic):
         try:
             self.average_size = int(sum(self.sizes) / len(self.sizes))
         except ZeroDivisionError:
-            print('Ноль логов!')
+            print("Ноль логов!")
             exit()
 
     def update(self, log):
@@ -77,17 +77,17 @@ class AverageResponseSizeStatistic(UpdateStatistic, GetStatistic):
 
     def get(self):
         self.calculate_average()
-        return {'Средний размер ответа': self.average_size}
+        return {"Средний размер ответа": self.average_size}
 
 
 class MostFrequentAgentStatistic(UpdateStatistic, GetStatistic):
 
     def __init__(self):
         self.agents = {}
-        self.agent = ''
+        self.agent = ""
 
     def compute_agent(self):
-        max_meeted_agent_and_count = ('', 0)
+        max_meeted_agent_and_count = ("", 0)
         for agent in self.agents.keys():
             if self.agents[agent] > max_meeted_agent_and_count[1]:
                 max_meeted_agent_and_count = agent, self.agents[agent]
@@ -100,17 +100,17 @@ class MostFrequentAgentStatistic(UpdateStatistic, GetStatistic):
 
     def get(self):
         self.compute_agent()
-        return {'Самый частый агент': self.agent}
+        return {"Самый частый агент": self.agent}
 
 
 class MostFrequentIpAddressStatistic(UpdateStatistic, GetStatistic):
 
     def __init__(self):
         self.ips = {}
-        self.ip = ''
+        self.ip = ""
 
     def compute_ip_count(self):
-        ip_and_count = ('', 0)
+        ip_and_count = ("", 0)
         for ip in self.ips.keys():
             if self.ips[ip] > ip_and_count[1]:
                 ip_and_count = ip, self.ips[ip]
@@ -123,7 +123,7 @@ class MostFrequentIpAddressStatistic(UpdateStatistic, GetStatistic):
 
     def get(self):
         self.compute_ip_count()
-        return {'Самый частый ip-адрес': self.ip}
+        return {"Самый частый ip-адрес": self.ip}
 
 
 class PercentileResponseSizeStatistic(UpdateStatistic, GetStatistic):
@@ -140,4 +140,4 @@ class PercentileResponseSizeStatistic(UpdateStatistic, GetStatistic):
 
     def get(self):
         self.calculate_percentile()
-        return {'95 перцентиль размера ответа': self.percentile}
+        return {"95 перцентиль размера ответа": self.percentile}

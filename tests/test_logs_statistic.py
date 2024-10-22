@@ -1,6 +1,12 @@
-from src.logs_statistic import RequestCountStatistic, MostCallableResourcesStatistic, MostFrequentStatusCodesStatistic, \
-    AverageResponseSizeStatistic, PercentileResponseSizeStatistic, MostFrequentIpAddressStatistic, \
-    MostFrequentAgentStatistic
+from src.logs_statistic import (
+    RequestCountStatistic,
+    MostCallableResourcesStatistic,
+    MostFrequentStatusCodesStatistic,
+    AverageResponseSizeStatistic,
+    PercentileResponseSizeStatistic,
+    MostFrequentIpAddressStatistic,
+    MostFrequentAgentStatistic,
+)
 
 import numpy as np
 
@@ -23,7 +29,7 @@ def test_request_count_statistic():
     stat.update(log1)
     stat.update(log2)
 
-    assert stat.get() == {'Кол-во запросов': 2}
+    assert stat.get() == {"Кол-во запросов": 2}
 
 
 # Тест для MostCallableResourcesStatistic
@@ -37,7 +43,7 @@ def test_most_callable_resources_statistic():
     stat.update(log2)
     stat.update(log3)
 
-    assert stat.get() == {'Ресурсы': {"/home": 2, "/about": 1}}
+    assert stat.get() == {"Ресурсы": {"/home": 2, "/about": 1}}
 
 
 # Тест для MostFrequentStatusCodesStatistic
@@ -51,7 +57,7 @@ def test_most_frequent_status_codes_statistic():
     stat.update(log2)
     stat.update(log3)
 
-    assert stat.get() == {'Коды статуса': {200: 2, 404: 1}}
+    assert stat.get() == {"Коды статуса": {200: 2, 404: 1}}
 
 
 # Тест для AverageResponseSizeStatistic
@@ -64,7 +70,7 @@ def test_average_response_size_statistic():
     stat.update(log2)
     stat.calculate_average()
 
-    assert stat.get() == {'Средний размер ответа': 400}
+    assert stat.get() == {"Средний размер ответа": 400}
 
 
 # Тест для MostFrequentAgentStatistic
@@ -78,7 +84,7 @@ def test_most_frequent_agent_statistic():
     stat.update(log2)
     stat.update(log3)
 
-    assert stat.get() == {'Самый частый агент': 'agent1'}
+    assert stat.get() == {"Самый частый агент": "agent1"}
 
 
 # Тест для MostFrequentIpAddressStatistic
@@ -92,7 +98,7 @@ def test_most_frequent_ip_address_statistic():
     stat.update(log2)
     stat.update(log3)
 
-    assert stat.get() == {'Самый частый ip-адрес': '127.0.0.1'}
+    assert stat.get() == {"Самый частый ip-адрес": "127.0.0.1"}
 
 
 # Тест для PercentileResponseSizeStatistic
@@ -110,4 +116,6 @@ def test_percentile_response_size_statistic():
 
     stat.calculate_percentile()
 
-    assert stat.get() == {'95 перцентиль размера ответа': int(np.percentile([500, 1000, 1500, 2000], 95))}
+    assert stat.get() == {
+        "95 перцентиль размера ответа": int(np.percentile([500, 1000, 1500, 2000], 95))
+    }

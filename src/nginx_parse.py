@@ -6,8 +6,21 @@ from src.enums import LogFields
 
 
 class NginxLog:
-    def __init__(self, ip, client_id, user_id, time_local, method, path, protocol, status_code, response_size, referrer,
-                 agent, mapped_log: Dict[str, str | int]):
+    def __init__(
+        self,
+        ip,
+        client_id,
+        user_id,
+        time_local,
+        method,
+        path,
+        protocol,
+        status_code,
+        response_size,
+        referrer,
+        agent,
+        mapped_log: Dict[str, str | int],
+    ):
         self.ip = ip
         self.client_id = client_id
         self.user_id = user_id
@@ -25,16 +38,16 @@ class NginxLog:
 class NginxLogParser:
     # Регулярное выражение для парсинга строки лога
     log_pattern = re.compile(
-        r'(?P<ip>\S+) ' 
-        r'(?P<client_id>\S+) '  
-        r'(?P<user_id>\S+) ' 
-        r'\[(?P<time_local>[^\]]+)\] ' 
-        r'"(?P<method>\S+) '  
-        r'(?P<path>\S+) '  
-        r'(?P<protocol>[^"]+)" ' 
-        r'(?P<status_code>\d{3}) ' 
-        r'(?P<response_size>\S+) '  
-        r'"(?P<referrer>[^"]*)" ' 
+        r"(?P<ip>\S+) "
+        r"(?P<client_id>\S+) "
+        r"(?P<user_id>\S+) "
+        r"\[(?P<time_local>[^\]]+)\] "
+        r'"(?P<method>\S+) '
+        r"(?P<path>\S+) "
+        r'(?P<protocol>[^"]+)" '
+        r"(?P<status_code>\d{3}) "
+        r"(?P<response_size>\S+) "
+        r'"(?P<referrer>[^"]*)" '
         r'"(?P<agent>[^"]*)"'
     )
 
@@ -46,8 +59,11 @@ class NginxLogParser:
             time_local = self.parse_time(data[LogFields.time_local])
 
             # Если размер ответа '-', то это означает, что размер неизвестен, заменим на 0
-            data[LogFields.response_size] = int(data[LogFields.response_size]) \
-                if data[LogFields.response_size] != '-' else 0
+            data[LogFields.response_size] = (
+                int(data[LogFields.response_size])
+                if data[LogFields.response_size] != "-"
+                else 0
+            )
 
             data[LogFields.status_code] = int(data[LogFields.status_code])
 
@@ -63,7 +79,7 @@ class NginxLogParser:
                 response_size=data[LogFields.response_size],
                 referrer=data[LogFields.referrer],
                 agent=data[LogFields.agent],
-                mapped_log=data
+                mapped_log=data,
             )
         else:
             raise ValueError(f"Лог не соответствует формату: {log_line}")

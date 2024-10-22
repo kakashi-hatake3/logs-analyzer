@@ -3,7 +3,7 @@ class WrongInputError(Exception):
         super().__init__()
 
     def __str__(self):
-        return 'Слишком мало параметров с --!'
+        return "Слишком мало параметров с --!"
 
     def __eq__(self, other):
         if isinstance(other, WrongInputError):
@@ -17,7 +17,7 @@ class WrongParameterNameError(Exception):
         super().__init__(self.name)
 
     def __str__(self):
-        return f'Не существует параметра с именем {self.name}!'
+        return f"Не существует параметра с именем {self.name}!"
 
     def __eq__(self, other):
         if isinstance(other, WrongParameterNameError):
@@ -31,7 +31,7 @@ class WrongCountParametersError(Exception):
         super().__init__(self.count)
 
     def __str__(self):
-        return f'Слишком мало параметров: {self.count - 1}!'
+        return f"Слишком мало параметров: {self.count - 1}!"
 
     def __eq__(self, other):
         if isinstance(other, WrongCountParametersError):
@@ -44,7 +44,7 @@ class WrongFileError(Exception):
         super().__init__()
 
     def __str__(self):
-        return 'Не получается открыть файл!'
+        return "Не получается открыть файл!"
 
     def __eq__(self, other):
         if isinstance(other, WrongFileError):
@@ -57,7 +57,7 @@ class WrongHtmlError(Exception):
         super().__init__()
 
     def __str__(self):
-        return 'На странице нет логов!'
+        return "На странице нет логов!"
 
     def __eq__(self, other):
         if isinstance(other, WrongHtmlError):
@@ -70,7 +70,7 @@ class WrongPathError(Exception):
         super().__init__()
 
     def __str__(self):
-        return 'Такого пути нет!'
+        return "Такого пути нет!"
 
     def __eq__(self, other):
         if isinstance(other, WrongPathError):

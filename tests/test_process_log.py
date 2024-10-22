@@ -9,19 +9,29 @@ from src.process_log import ProcessLog
 @pytest.fixture
 def mapped_params():
     """Фикстура для параметров, маппинга."""
-    return {'from': '2000-10-10', 'format': 'adoc', 'filter-field': 'method', 'filter-value': 'GET'}
+    return {
+        "from": "2000-10-10",
+        "format": "adoc",
+        "filter-field": "method",
+        "filter-value": "GET",
+    }
 
 
 @pytest.fixture
 def none_mapped_params():
     """Фикстура для параметров, маппинга."""
-    return {'from': '2000-10-10', 'format': 'adoc', 'filter-field': 'method'}
+    return {"from": "2000-10-10", "format": "adoc", "filter-field": "method"}
 
 
 @pytest.fixture
 def wrong_mapped_params():
     """Фикстура для параметров, маппинга."""
-    return {'from': '2020-10-10', 'format': 'adoc', 'filter-field': 'aboba', 'filter-value': 'GET'}
+    return {
+        "from": "2020-10-10",
+        "format": "adoc",
+        "filter-field": "aboba",
+        "filter-value": "GET",
+    }
 
 
 @pytest.fixture
@@ -39,7 +49,7 @@ def nginx_log(log_line):
 def test_create_log_success(log_line, mapped_params, nginx_log):
     """Тест успешного создания лога."""
     process_log = ProcessLog(log_line, mapped_params)
-    with patch.object(NginxLogParser, 'parse_log_line', return_value=nginx_log):
+    with patch.object(NginxLogParser, "parse_log_line", return_value=nginx_log):
         process_log._create_log()
         assert process_log.log.mapped_log == nginx_log.mapped_log
 
@@ -47,7 +57,9 @@ def test_create_log_success(log_line, mapped_params, nginx_log):
 def test_create_log_failure(log_line, mapped_params):
     """Тест ошибки при создании лога (ValueError)."""
     process_log = ProcessLog(log_line, mapped_params)
-    with patch.object(NginxLogParser, 'parse_log_line', side_effect=ValueError("Invalid log line")):
+    with patch.object(
+        NginxLogParser, "parse_log_line", side_effect=ValueError("Invalid log line")
+    ):
         with pytest.raises(SystemExit):  # Ожидаем, что программа завершится с exit()
             process_log._create_log()
 
