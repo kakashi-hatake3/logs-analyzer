@@ -12,15 +12,9 @@ class PathHandler:
         self.mapped_params = mapped_params
         self.path_type: str | None = None
 
-    def is_available(self) -> bool:
-        """Проверяем есть ли параметр format."""
-        if self.file_path is None:
-            return False
-        return True
-
     def define_path_type(self) -> None:
         """Определяем тип пути к логам."""
-        if self.is_available():
+        if self.file_path is not None:
             if self.file_path[:8] == "https://":
                 self.path_type = PathTypes.url.value
             else:
