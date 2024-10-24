@@ -1,38 +1,24 @@
 import re
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Dict
 
 from src.enums import LogFields
 
-
+@dataclass
 class NginxLog:
-    def __init__(
-        self,
-        ip,
-        client_id,
-        user_id,
-        time_local,
-        method,
-        path,
-        protocol,
-        status_code,
-        response_size,
-        referrer,
-        agent,
-        mapped_log: Dict[str, str | int],
-    ):
-        self.ip = ip
-        self.client_id = client_id
-        self.user_id = user_id
-        self.time_local = time_local
-        self.method = method
-        self.path = path
-        self.protocol = protocol
-        self.status_code = status_code
-        self.response_size = response_size
-        self.referrer = referrer
-        self.agent = agent
-        self.mapped_log = mapped_log
+    ip: str
+    client_id: str
+    user_id: str
+    time_local: datetime
+    method: str
+    path: str
+    protocol: str
+    status_code: int
+    response_size: int
+    referrer: str
+    agent: str
+    mapped_log: Dict[str, str | int]
 
 
 class NginxLogParser:
