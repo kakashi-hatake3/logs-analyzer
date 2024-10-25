@@ -39,8 +39,8 @@ class InputMapper:
                 is_should_add = True
                 should_add_param = parameter[2:]
 
-    def get_mapped_params(self) -> Dict[str, str] | Exception:
-        """Возвращаем словарь или ошибку."""
+    def get_mapped_params(self) -> Dict[str, str]:
+        """Возвращаем словарь или печатает ошибку."""
         try:
             self._map_input()
             CheckParameters(

@@ -11,8 +11,11 @@ class FormatHandler:
         self.file_format = mapped_params.get(InputParameters.file_format, None)
         self.formats = (Formats.adoc.value, Formats.markdown.value)
 
-    def get_format(self) -> str | Exception | None:
-        """Возвращаем проверенный формат."""
+    def get_format(self) -> str | None:
+        """Возвращаем проверенный формат, None или ошибку.
+
+        :return: str | None | WrongParameterNameError
+        """
         check_format = CheckFormatCorrectness(self.file_format)
         if check_format.is_none_check():
             try:
